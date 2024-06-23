@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RepositoryController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -15,3 +16,6 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+Route::resource('repositories', RepositoryController::class)
+    ->middleware('auth');
