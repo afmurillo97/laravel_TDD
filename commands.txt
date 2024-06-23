@@ -1,0 +1,7 @@
+-- Make an unitary test
+
+php artisan make:test Models/RepositoryTest --unit
+
+-- Make Model with migration and factory
+
+php artisan make:model Repository -mf
