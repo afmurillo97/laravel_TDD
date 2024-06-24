@@ -2,65 +2,67 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RepositoryRequest;
 use App\Models\Repository;
-use Illuminate\Http\Request;
+use \Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class RepositoryController extends Controller
 {
-    public function index(Request $request)
+    use AuthorizesRequests;
+
+    public function index()
     {
         return view('repositories.index', [
-            'repositories' => $request->user()->repositories
+            'repositories' => auth()->user()->repositories
         ]);
     }
 
-    public function show(Request $request, Repository $repository) 
+    public function show(Repository $repository) 
     {
         // An user can only delete own repositories
-        if ($request->user()->id !== $repository->user_id) {
-            abort(403);
-        }
+        $this->authorize('pass', $repository);
 
         return view('repositories.show', [
             'repository' => $repository
         ]);
     }
 
-    public function store(Request $request) 
+    function create() 
     {
-        $request->validate([
-            'url' => 'required',
-            'description' => 'required'
-        ]);
+        return view('repositories.create');    
+    }
 
+    public function store(RepositoryRequest $request) 
+    {
         $request->user()->repositories()->create($request->all());
 
         return redirect()->route('repositories.index');
     }
 
-    public function update(Request $request, Repository $repository) 
+    public function edit(Repository $repository) 
     {
-        $request->validate([
-            'url' => 'required',
-            'description' => 'required'
-        ]);
+        // An user can only delete own repositories
+        $this->authorize('pass', $repository);
 
+        return view('repositories.edit', [
+            'repository' => $repository
+        ]);
+    }
+
+    public function update(RepositoryRequest $request, Repository $repository) 
+    {
         // An user can only update own repositories
-        if ($request->user()->id !== $repository->user_id) {
-            abort(403);
-        }
+        $this->authorize('pass', $repository);
 
         $repository->update($request->all());
 
         return redirect()->route('repositories.edit', $repository);
     }
 
-    public function destroy(Request $request, Repository $repository) 
+    public function destroy(Repository $repository) 
     {
         // An user can only delete own repositories
-        if ($request->user()->id !== $repository->user_id) {
-            abort(403);
-        }
+        $this->authorize('pass', $repository);
 
         $repository->delete();
 
