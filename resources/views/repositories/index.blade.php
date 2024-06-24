@@ -7,7 +7,16 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+            <p class="text-right mb-4">
+                <a 
+                    href="{{ route('repositories.create') }}" 
+                    class="bg-blue-500 text-white font-bold py-2 px-4 rounded-md text-xs"
+                >
+                    New Repository
+                </a>
+            </p>
+
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4">
                 <table>
                     <thead>
                         <tr>
@@ -20,8 +29,23 @@
                             <tr>
                                 <td class="border px-4 py-2">{{ $repository->id }}</td>
                                 <td class="border px-4 py-2">{{ $repository->url }}</td>
-                                <td>
-                                    <a href="{{ route('repositories.show', $repository) }}">View Repo</a>
+                                <td class="px-4 py-2">
+                                    <a href="{{ route('repositories.show', $repository) }}">
+                                        View Repo
+                                    </a>
+                                </td>
+                                <td class="px-4 py-2">
+                                    <a href="{{ route('repositories.edit', $repository) }}">
+                                        Edit
+                                    </a>
+                                </td>
+                                <td class="px-4 py-2">
+                                    <form action="{{ route('repositories.destroy', $repository) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <input type="submit" value="Delete" class="px-4 rounded-md bg-red-500 cursor-pointer">
+                                    </form>
                                 </td>
                             </tr>
                         @empty
