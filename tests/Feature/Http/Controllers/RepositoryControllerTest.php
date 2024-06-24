@@ -50,6 +50,16 @@ class RepositoryControllerTest extends TestCase
 
     }
 
+    public function test_create()
+    {
+        $user = User::factory()->create();     
+
+        $this
+            ->actingAs($user)
+            ->get("repositories/create")
+            ->assertStatus(200);
+    }
+
     public function test_store()
     {
         $data = [
@@ -173,4 +183,28 @@ class RepositoryControllerTest extends TestCase
             ->get("repositories/$repository->id")
             ->assertStatus(403);
     }
+
+    public function test_edit()
+    {
+        $user = User::factory()->create();
+        $repository = Repository::factory()->create(['user_id' => $user->id]);        
+
+        $this
+            ->actingAs($user)
+            ->put("repositories/$repository->id/edit")
+            ->assertSee($repository->url)
+            ->assertSee($repository->description);
+    }
+
+    public function test_edit_policy()
+    {
+        $user = User::factory()->create(); // id = 1
+        $repository = Repository::factory()->create(); // user_id = 2
+
+        $this
+            ->actingAs($user)
+            ->get("repositories/$repository->id/edit")
+            ->assertStatus(403);
+    }
+
 }
