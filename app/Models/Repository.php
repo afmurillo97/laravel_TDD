@@ -18,4 +18,9 @@ class Repository extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function getDescriptionSnippetAttribute()
+    {
+        return substr($this->description, 0, 50) . '...';
+    }
 }
