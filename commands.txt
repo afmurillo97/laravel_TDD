@@ -5,3 +5,11 @@ php artisan make:test Models/RepositoryTest --unit
 -- Make Model with migration and factory
 
 php artisan make:model Repository -mf
+
+-- Change permissions
+
+sudo chown -R www-data:www-data /var/www/html/Laravel\ Course/laravel_TDD/storage
+sudo chown -R www-data:www-data /var/www/html/Laravel\ Course/laravel_TDD/bootstrap/cache
+
+sudo chmod -R 775 /var/www/html/Laravel\ Course/laravel_TDD/storage
+sudo chmod -R 775 /var/www/html/Laravel\ Course/laravel_TDD/bootstrap/cache
