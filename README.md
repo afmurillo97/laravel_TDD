@@ -113,7 +113,6 @@ This section should list any major frameworks/libraries used to bootstrap my pro
 
 * [![PHP][PHP.dev]][PHP-url]
 * [![Laravel][Laravel.com]][Laravel-url]
-* [![Javascript][Javascript.dev]][Javascript-url]
 * [![MySQL][MySQL.com]][MySQL-url]
 * [![Tailwind CSS][TailwindCSS.dev]][TailwindCSS-url]
 * [![Alpine.js][AlpineJS.dev]][AlpineJS-url]
